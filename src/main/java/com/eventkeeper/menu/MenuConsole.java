@@ -1,6 +1,7 @@
 package com.eventkeeper.menu;
 
 import com.eventkeeper.models.Event;
+import com.eventkeeper.models.Participant;
 import com.eventkeeper.services.EventService;
 import com.eventkeeper.services.ParticipantService;
 
@@ -30,7 +31,8 @@ public class MenuConsole {
             System.out.println("3. Supprimer un événement");
             System.out.println("4. Lister tous les événements");
             System.out.println("5. Rechercher des événements");
-            System.out.println("6. Quitter");
+            System.out.println("6. Gérer les participants");
+            System.out.println("7. Quitter");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput(); // Get user input for menu choice
@@ -52,6 +54,9 @@ public class MenuConsole {
                     searchEvents();
                     break;
                 case 6:
+                    manageParticipants();
+                    break;
+                case 7:
                     System.out.println("Vous quittez le menu Administrateur.");
                     return;
                 default:
@@ -92,6 +97,99 @@ public class MenuConsole {
             } catch (NumberFormatException ex) {
                 System.out.print("Entrée invalide. Veuillez saisir un nombre entier: ");
             }
+        }
+    }
+
+    //Gestion des participant
+    private void manageParticipants() {
+        while (true) {
+            System.out.println("\nGestion des Participants:");
+            System.out.println("1. Ajouter un participant");
+            System.out.println("2. Modifier un participant");
+            System.out.println("3. Supprimer un participant");
+            System.out.println("4. Afficher la liste des participants");
+            System.out.println("5. Retour au menu principal");
+            System.out.print("Choisissez une option: ");
+
+            int choice = getIntInput(); // Get user input for menu choice
+
+            switch (choice) {
+                case 1:
+                    addParticipant();
+                    break;
+                case 2:
+                    updateParticipant();
+                    break;
+                case 3:
+                    deleteParticipant();
+                    break;
+                case 4:
+                    listParticipants();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Option invalide. Veuillez réessayer.");
+            }
+        }
+    }
+
+    private void addParticipant() {
+        System.out.println("Ajouter un participant");
+        System.out.print("Entrez le prénom: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Entrez le nom de famille: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Entrez l'email: ");
+        String email = scanner.nextLine();
+        System.out.print("Entrez le numéro de téléphone: ");
+        String phoneNumber = scanner.nextLine();
+        Participant participant = new Participant(1, firstName, lastName, email, phoneNumber);
+        participantService.addParticipant(participant);
+        System.out.println("Participant ajouté avec succès.");
+    }
+
+    private void updateParticipant() {
+        System.out.println("Modifier un participant");
+        System.out.print("Entrez l'ID du participant à modifier: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Participant participant = participantService.getParticipantById(id);
+        if (participant != null) {
+            System.out.print("Entrez le nouveau prénom (laisser vide pour ne pas modifier): ");
+            String firstName = scanner.nextLine();
+            System.out.print("Entrez le nouveau nom de famille (laisser vide pour ne pas modifier): ");
+            String lastName = scanner.nextLine();
+            System.out.print("Entrez le nouvel email (laisser vide pour ne pas modifier): ");
+            String email = scanner.nextLine();
+            System.out.print("Entrez le nouveau numéro de téléphone (laisser vide pour ne pas modifier): ");
+            String phoneNumber = scanner.nextLine();
+
+            if (!firstName.isEmpty()) participant.setFirstName(firstName);
+            if (!lastName.isEmpty()) participant.setLastName(lastName);
+            if (!email.isEmpty()) participant.setEmail(email);
+            if (!phoneNumber.isEmpty()) participant.setPhoneNumber(phoneNumber);
+
+            participantService.updateParticipant(participant);
+            System.out.println("Participant mis à jour avec succès.");
+        } else {
+            System.out.println("Participant non trouvé.");
+        }
+    }
+
+    private void deleteParticipant() {
+        System.out.println("Supprimer un participant");
+        System.out.print("Entrez l'ID du participant à supprimer: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Clear the buffer
+        participantService.deleteParticipant(id);
+        System.out.println("Participant supprimé avec succès.");
+    }
+
+    private void listParticipants() {
+        System.out.println("Liste des participants:");
+        for (Participant participant : participantService.getAllParticipants()) {
+            System.out.println(participant);
         }
     }
 

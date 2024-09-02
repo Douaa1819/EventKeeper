@@ -6,9 +6,10 @@ import java.util.List;
 
 public class ParticipantDAOImpl implements ParticipantDAO {
     private List<Participant> participants = new ArrayList<>();
-
+    private static int lastId = 0;
     @Override
     public void addParticipant(Participant participant) {
+        participant.setId(++lastId);
         participants.add(participant);
     }
 

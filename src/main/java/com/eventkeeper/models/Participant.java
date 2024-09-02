@@ -18,6 +18,12 @@ public class Participant extends User {
 
     @Override
     public String toString() {
-        return "Participant{" + "id=" + getId() + ", firstName='" + getFirstName() + "', lastName='" + getLastName() + "', email='" + getEmail() + "', phoneNumber='" + phoneNumber + "'}";
+        return "Participant{" +
+                "id=" + getId() +
+                ", firstName='" + getFirstName() +
+                "', lastName='" + getLastName() +
+                "', email='" + getEmail() +
+                "', phoneNumber='" + phoneNumber +
+                "'}";
     }
 }
