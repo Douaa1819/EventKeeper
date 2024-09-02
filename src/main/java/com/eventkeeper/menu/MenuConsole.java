@@ -15,7 +15,7 @@ public class MenuConsole {
     private final Scanner scanner;
 
     // Constructor to initialize the services and scanner
-    public MenuConsole(EventService eventService, ParticipantService participantService) {
+    public MenuConsole(EventService eventService, ParticipantService participantService, Scanner scanner) {
         this.eventService = eventService;
         this.participantService = participantService;
         this.scanner = new Scanner(System.in);
@@ -59,6 +59,7 @@ public class MenuConsole {
             }
         }
     }
+
 
     // Method to start the participant menu
     public void startParticipantMenu() {
@@ -182,15 +183,36 @@ public class MenuConsole {
     private void searchEvents() {
         System.out.println("Recherche d'événements:");
 
-        System.out.print("Entrez la date de l'événement (dd-MM-yyyy) ou laissez vide pour ne pas filtrer: ");
-        String dateString = scanner.nextLine();
-        Date date = dateString.isEmpty() ? null : convertStringToDate(dateString);
+        System.out.println("1. Rechercher par date");
+        System.out.println("2. Rechercher par lieu");
+        System.out.println("3. Rechercher par type");
+        System.out.println("4. Retourner au menu précédent");
+        System.out.print("Choisissez une option: ");
 
-        System.out.print("Entrez le lieu de l'événement ou laissez vide pour ne pas filtrer: ");
-        String location = scanner.nextLine();
+        int choice = getIntInput();
+        Date date = null;
+        String location = null;
+        String type = null;
 
-        System.out.print("Entrez le type d'événement ou laissez vide pour ne pas filtrer: ");
-        String type = scanner.nextLine();
+        switch (choice) {
+            case 1:
+                System.out.print("Entrez la date de l'événement (dd-MM-yyyy): ");
+                date = convertStringToDate(scanner.nextLine());
+                break;
+            case 2:
+                System.out.print("Entrez le lieu de l'événement: ");
+                location = scanner.nextLine();
+                break;
+            case 3:
+                System.out.print("Entrez le type d'événement: ");
+                type = scanner.nextLine();
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Option invalide. Retour au menu précédent.");
+                return;
+        }
 
         List<Event> events = eventService.searchEvents(date, location, type);
         if (events.isEmpty()) {
@@ -201,6 +223,7 @@ public class MenuConsole {
             }
         }
     }
+
     // Method to list all events
     private void listAllEvents() {
         try {

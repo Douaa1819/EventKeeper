@@ -1,7 +1,9 @@
 package com.eventkeeper;
 
+import com.eventkeeper.dao.EventDAO;
 import com.eventkeeper.dao.EventDAOImpl;
 import com.eventkeeper.dao.ParticipantDAO;
+import com.eventkeeper.dao.ParticipantDAOImpl;
 import com.eventkeeper.menu.MenuConsole;
 import com.eventkeeper.models.Admin;
 import com.eventkeeper.models.Participant;
@@ -13,39 +15,41 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // Initialisation des DAO et des services
-        EventDAOImpl eventDAO = new EventDAOImpl();
-        ParticipantDAO participantDAO = new ParticipantDAO();
+        EventDAO eventDAO = new EventDAOImpl();
+        ParticipantDAO participantDAO = new ParticipantDAOImpl();
 
         EventService eventService = new EventService(eventDAO);
         ParticipantService participantService = new ParticipantService(participantDAO);
 
-        MenuConsole menuConsole = new MenuConsole(eventService, participantService);
-
-        // Gestion de l'entrée utilisateur pour la sélection du rôle
         Scanner scanner = new Scanner(System.in);
-        int role = promptForRole(scanner);
 
-        // Création de l'utilisateur en fonction du rôle choisi
-        if (role == 0) {
-            Admin admin = createAdmin(scanner);
-            greetUser(admin.getFirstName(), admin.getLastName(), "Administrateur");
-            menuConsole.startAdminMenu();
-        } else if (role == 1) {
-            Participant participant = createParticipant(scanner);
-            greetUser(participant.getFirstName(), participant.getLastName(), "Participant");
-            menuConsole.startParticipantMenu();
-        } else {
-            System.out.println("Rôle invalide. Veuillez redémarrer l'application.");
+        while (true) {
+            MenuConsole menuConsole = new MenuConsole(eventService, participantService, scanner);
+
+            int role = promptForRole(scanner);
+
+            if (role == 0) {
+                Admin admin = createAdmin(scanner);
+                greetUser(admin.getFirstName(), admin.getLastName(), "Administrateur");
+                menuConsole.startAdminMenu();
+            } else if (role == 1) {
+                Participant participant = createParticipant(scanner);
+                greetUser(participant.getFirstName(), participant.getLastName(), "Participant");
+                menuConsole.startParticipantMenu();
+            } else {
+                System.out.println("Rôle invalide. Veuillez redémarrer l'application.");
+                break;
+            }
         }
 
         scanner.close();
     }
 
-    // Méthode pour demander le rôle à l'utilisateur
+
     private static int promptForRole(Scanner scanner) {
         System.out.println("Entrez votre rôle (0 pour Admin, 1 pour Participant):");
         int role = scanner.nextInt();
-        scanner.nextLine();  // Vider le tampon
+        scanner.nextLine();
         return role;
     }
 
@@ -73,7 +77,7 @@ public class Main {
         return new Participant(1, firstName, lastName, email, phoneNumber);
     }
 
-    // Méthode pour afficher un message de bienvenue à l'utilisateur
+
     private static void greetUser(String firstName, String lastName, String role) {
         System.out.println("Bienvenue, " + firstName + " " + lastName);
         System.out.println("Vous êtes un " + role + ".");
