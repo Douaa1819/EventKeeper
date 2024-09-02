@@ -3,6 +3,7 @@ package com.eventkeeper.services;
 import com.eventkeeper.dao.EventDAO;
 import com.eventkeeper.models.Event;
 
+import java.util.Date;
 import java.util.List;
 
 public class EventService {
@@ -32,7 +33,9 @@ public class EventService {
     public Event getEventById(int eventId) {
         return eventDAO.getEventById(eventId);
     }
-
+    public List<Event> searchEvents(Date date, String location, String type) {
+        return eventDAO.searchEvents(date, location, type);
+    }
     // Get all events
     public List<Event> getAllEvents() {
         return eventDAO.getAllEvents();

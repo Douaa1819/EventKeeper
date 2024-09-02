@@ -3,7 +3,9 @@ package com.eventkeeper.dao;
 import com.eventkeeper.models.Event;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EventDAOImpl implements EventDAO {
     private List<Event> events = new ArrayList<>();
@@ -46,4 +48,14 @@ public class EventDAOImpl implements EventDAO {
     public List<Event> getAllEvents() {
         return new ArrayList<>(events);
     }
+
+    @Override
+    public List<Event> searchEvents(Date date, String location, String type) {
+        return events.stream()
+                .filter(event -> (date == null || event.getDate().equals(date)) &&
+                        (location == null || location.isEmpty() || event.getLocation().equalsIgnoreCase(location)) &&
+                        (type == null || type.isEmpty() || event.getType().equalsIgnoreCase(type)))
+                .collect(Collectors.toList());
+    }
 }
+

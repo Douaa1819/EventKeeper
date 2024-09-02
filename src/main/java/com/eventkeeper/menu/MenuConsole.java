@@ -29,7 +29,8 @@ public class MenuConsole {
             System.out.println("2. Modifier un événement");
             System.out.println("3. Supprimer un événement");
             System.out.println("4. Lister tous les événements");
-            System.out.println("5. Quitter");
+            System.out.println("5. Rechercher des événements");
+            System.out.println("6. Quitter");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput(); // Get user input for menu choice
@@ -48,6 +49,9 @@ public class MenuConsole {
                     listAllEvents();
                     break;
                 case 5:
+                    searchEvents();
+                    break;
+                case 6:
                     System.out.println("Vous quittez le menu Administrateur.");
                     return;
                 default:
@@ -64,7 +68,7 @@ public class MenuConsole {
             System.out.println("2. Quitter");
             System.out.print("Choisissez une option: ");
 
-            int choice = getIntInput(); // Get user input for menu choice
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1:
@@ -90,12 +94,10 @@ public class MenuConsole {
         }
     }
 
-    // Method to add an event
     private void addEvent() {
         try {
             System.out.print("Entrez le titre de l'événement: ");
             String title = scanner.nextLine();
-
             System.out.print("Entrez la description de l'événement: ");
             String description = scanner.nextLine();
 
@@ -117,7 +119,6 @@ public class MenuConsole {
         }
     }
 
-    // Method to update an event
     private void updateEvent() {
         try {
             System.out.print("Entrez l'ID de l'événement à modifier: ");
@@ -167,7 +168,6 @@ public class MenuConsole {
         }
     }
 
-    // Method to delete an event
     private void deleteEvent() {
         try {
             System.out.print("Entrez l'ID de l'événement à supprimer: ");
@@ -179,7 +179,28 @@ public class MenuConsole {
             System.out.println("Erreur lors de la suppression de l'événement: " + e.getMessage());
         }
     }
+    private void searchEvents() {
+        System.out.println("Recherche d'événements:");
 
+        System.out.print("Entrez la date de l'événement (dd-MM-yyyy) ou laissez vide pour ne pas filtrer: ");
+        String dateString = scanner.nextLine();
+        Date date = dateString.isEmpty() ? null : convertStringToDate(dateString);
+
+        System.out.print("Entrez le lieu de l'événement ou laissez vide pour ne pas filtrer: ");
+        String location = scanner.nextLine();
+
+        System.out.print("Entrez le type d'événement ou laissez vide pour ne pas filtrer: ");
+        String type = scanner.nextLine();
+
+        List<Event> events = eventService.searchEvents(date, location, type);
+        if (events.isEmpty()) {
+            System.out.println("Aucun événement trouvé.");
+        } else {
+            for (Event event : events) {
+                System.out.println(event);
+            }
+        }
+    }
     // Method to list all events
     private void listAllEvents() {
         try {
@@ -196,14 +217,13 @@ public class MenuConsole {
         }
     }
 
-    // Helper method to convert a string to a date
     private Date convertStringToDate(String dateString) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            return format.parse(dateString);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            return formatter.parse(dateString);
         } catch (Exception e) {
-            System.out.println("Format de date invalide.");
-            return null;
+            System.out.println("Date invalide. Utilisation de la date actuelle.");
+            return new Date();
         }
     }
 }
