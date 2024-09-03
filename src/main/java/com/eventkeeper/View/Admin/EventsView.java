@@ -1,13 +1,11 @@
 package com.eventkeeper.View.Admin;
 
-import com.eventkeeper.dao.EventDAO;
-import com.eventkeeper.dao.EventDAOImpl;
-import com.eventkeeper.dao.ParticipantDAO;
-import com.eventkeeper.dao.ParticipantDAOImpl;
-import com.eventkeeper.models.Event;
 import com.eventkeeper.services.EventService;
 import com.eventkeeper.services.ParticipantService;
 import com.eventkeeper.services.RegistrationService;
+import com.eventkeeper.View.Admin.ParticipantView;
+
+import com.eventkeeper.models.Event;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,14 +13,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EventsView {
-    private static  final EventDAO eventDAO = new EventDAOImpl();
-    private  static  final ParticipantView participantView =new ParticipantView();
-    private static  final ParticipantDAO participantDAO = new ParticipantDAOImpl();
-    private static final EventService eventService = new EventService(eventDAO);
-    private  static final  ParticipantService participantService = new ParticipantService(participantDAO);
+    private final EventService eventService;
+    private final ParticipantService participantService;
+    private final RegistrationService registrationService;
+    private final ParticipantView participantView;
+    private final Scanner scanner = new Scanner(System.in);
 
-    private static final Scanner scanner = new Scanner(System.in);;
-
+    public EventsView(EventService eventService, ParticipantService participantService, RegistrationService registrationService) {
+        this.eventService = eventService;
+        this.participantService = participantService;
+        this.registrationService = registrationService;
+        this.participantView = new ParticipantView(); // Passez les services si ParticipantView en a besoin
+    }
     public void run() {
         while (true) {
             System.out.println("\nMenu Administrateur:");

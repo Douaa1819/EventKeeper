@@ -2,7 +2,6 @@ package com.eventkeeper;
 
 import com.eventkeeper.View.Auth;
 import com.eventkeeper.dao.*;
-import com.eventkeeper.menu.MenuConsole;
 import com.eventkeeper.models.Admin;
 import com.eventkeeper.models.Participant;
 import com.eventkeeper.services.EventService;

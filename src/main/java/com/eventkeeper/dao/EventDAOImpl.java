@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EventDAOImpl implements EventDAO {
-    private List<Event> events = new ArrayList<>();
+    private static List<Event> events = new ArrayList<>();
 
     @Override
     public void addEvent(Event event) {
