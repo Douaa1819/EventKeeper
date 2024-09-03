@@ -1,5 +1,6 @@
 package com.eventkeeper.menu;
 
+import com.eventkeeper.Main;
 import com.eventkeeper.models.Event;
 import com.eventkeeper.models.Participant;
 import com.eventkeeper.models.Registration;
@@ -17,6 +18,7 @@ public class MenuConsole {
     private final ParticipantService participantService;
     private final RegistrationService registrationService;
     private final Scanner scanner;
+
 
     public MenuConsole(EventService eventService, ParticipantService participantService, RegistrationService registrationService, Scanner scanner) {
         this.eventService = eventService;
@@ -77,7 +79,9 @@ public class MenuConsole {
         while (true) {
             System.out.println("\nMenu Participant:");
             System.out.println("1. Voir tous les événements");
-            System.out.println("2. Quitter");
+            System.out.println("2. S'inscrire à un événement");
+            System.out.println("3. Voir mes inscriptions");
+            System.out.println("4. Quitter");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput();
@@ -87,11 +91,56 @@ public class MenuConsole {
                     listAllEvents();
                     break;
                 case 2:
+                    registerForEvent();
+                    break;
+                case 3:
+                    viewMyRegistrations();
+                    break;
+                case 4:
                     System.out.println("Vous quittez le menu Participant.");
                     return;
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
             }
+        }
+    }
+
+    private void registerForEvent() {
+        try {
+
+            System.out.print("Entrez votre ID de participant: ");
+            int participantId = getIntInput();
+            System.out.print("Entrez l'ID de l'événement auquel vous voulez vous inscrire: ");
+            int eventId = getIntInput();
+            registrationService.registerParticipant(eventId, participantId);
+            System.out.println("Inscription réussie.");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'inscription: " + e.getMessage());
+        }
+    }
+
+    private void viewMyRegistrations() {
+        try {
+            System.out.print("Entrez votre ID de participant: ");
+            int participantId = getIntInput();
+
+            List<Registration> registrations = registrationService.getRegistrationsByParticipantId(participantId);
+            if (registrations.isEmpty()) {
+                System.out.println("Aucune inscription trouvée pour ce participant.");
+            } else {
+                System.out.println("Vos inscriptions:");
+                for (Registration registration : registrations) {
+                    // Fetch and display event details
+                    Event event = eventService.getEventById(registration.getEventId());
+                    System.out.println("Événement: " + event);
+
+                    // Display registration details
+                    System.out.println("Détails de l'inscription: " + registration);
+                    System.out.println(); // Blank line for readability
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'affichage des inscriptions: " + e.getMessage());
         }
     }
 

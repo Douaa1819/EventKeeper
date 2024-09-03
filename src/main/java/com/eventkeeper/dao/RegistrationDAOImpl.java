@@ -39,4 +39,17 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         }
         return result;
     }
+
+
+    @Override
+    public void registerParticipant(int eventId, int participantId) {
+        // Create a new registration
+        Registration registration = new Registration(eventId, participantId);
+        save(registration);
+    }
+
+    @Override
+    public List<Registration> getRegistrationsByParticipantId(int participantId) {
+        return findByParticipantId(participantId);
+    }
 }

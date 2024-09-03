@@ -31,4 +31,15 @@ public class ParticipantService {
     public Participant getParticipantById(int participantId) {
         return participantDAO.getParticipantById(participantId);
     }
+
+//    public int getParticipantIdByName(String name) {
+//        for (Participant participant : participantDAO.getAllParticipants()) {
+//            if (participant.getFirstName().equalsIgnoreCase(name)) {
+//                return participant.getId();
+//            }
+//        }
+//        return -1; // Retourne -1 si aucun participant n'est trouvé
+//    }
+
+
 }

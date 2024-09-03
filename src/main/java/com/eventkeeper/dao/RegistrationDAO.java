@@ -9,4 +9,6 @@ public interface RegistrationDAO {
     void delete(int eventId, int participantId);
     List<Registration> findByEventId(int eventId);
     List<Registration> findByParticipantId(int participantId);
+    void registerParticipant(int eventId, int participantId);
+    List<Registration> getRegistrationsByParticipantId(int participantId);
 }
