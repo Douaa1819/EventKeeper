@@ -11,12 +11,11 @@ public class Event {
     private String location;
     private String type;
 
-    // Constructeur sans paramètres
+
     public Event() {}
 
-    // Constructeur avec paramètres (sans id, car il est auto-généré)
     public Event(String title, String description, Date date, String location, String type) {
-        this.id = ++lastId; // Incrémente et assigne un nouvel ID unique
+        this.id = ++lastId;
         this.title = title;
         this.description = description;
         this.date = date;

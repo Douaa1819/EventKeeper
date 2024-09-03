@@ -2,8 +2,10 @@ package com.eventkeeper.menu;
 
 import com.eventkeeper.models.Event;
 import com.eventkeeper.models.Participant;
+import com.eventkeeper.models.Registration;
 import com.eventkeeper.services.EventService;
 import com.eventkeeper.services.ParticipantService;
+import com.eventkeeper.services.RegistrationService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,16 +15,16 @@ import java.util.Scanner;
 public class MenuConsole {
     private final EventService eventService;
     private final ParticipantService participantService;
+    private final RegistrationService registrationService;
     private final Scanner scanner;
 
-    // Constructor to initialize the services and scanner
-    public MenuConsole(EventService eventService, ParticipantService participantService, Scanner scanner) {
+    public MenuConsole(EventService eventService, ParticipantService participantService, RegistrationService registrationService, Scanner scanner) {
         this.eventService = eventService;
         this.participantService = participantService;
-        this.scanner = new Scanner(System.in);
+        this.registrationService = registrationService;
+        this.scanner = scanner;
     }
 
-    // Method to start the admin menu
     public void startAdminMenu() {
         while (true) {
             System.out.println("\nMenu Administrateur:");
@@ -32,10 +34,11 @@ public class MenuConsole {
             System.out.println("4. Lister tous les événements");
             System.out.println("5. Rechercher des événements");
             System.out.println("6. Gérer les participants");
-            System.out.println("7. Quitter");
+            System.out.println("7. Gérer les inscriptions");
+            System.out.println("8. Quitter");
             System.out.print("Choisissez une option: ");
 
-            int choice = getIntInput(); // Get user input for menu choice
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1:
@@ -57,6 +60,9 @@ public class MenuConsole {
                     manageParticipants();
                     break;
                 case 7:
+                    manageRegistrations();
+                    break;
+                case 8:
                     System.out.println("Vous quittez le menu Administrateur.");
                     return;
                 default:
@@ -131,6 +137,110 @@ public class MenuConsole {
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
             }
+        }
+    }
+
+
+
+
+
+
+    private void manageRegistrations() {
+        while (true) {
+            System.out.println("\nGestion des Inscriptions:");
+            System.out.println("1. Inscrire un participant à un événement");
+            System.out.println("2. Désinscrire un participant d'un événement");
+            System.out.println("3. Voir les inscriptions par événement");
+            System.out.println("4. Voir les inscriptions par participant");
+            System.out.println("5. Retour au menu principal");
+            System.out.print("Choisissez une option: ");
+
+            int choice = getIntInput();
+
+            switch (choice) {
+                case 1:
+                    inscrireParticipant();
+                    break;
+                case 2:
+                    desinscrireParticipant();
+                    break;
+                case 3:
+                    voirInscriptionsParEvenement();
+                    break;
+                case 4:
+                    voirInscriptionsParParticipant();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Option invalide. Veuillez réessayer.");
+            }
+        }
+    }
+
+    private void inscrireParticipant() {
+        try {
+            System.out.print("Entrez l'ID du participant: ");
+            int participantId = getIntInput();
+            System.out.print("Entrez l'ID de l'événement: ");
+            int eventId = getIntInput();
+
+            registrationService.registerParticipant(eventId, participantId);
+            System.out.println("Inscription réussie.");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'inscription: " + e.getMessage());
+        }
+    }
+
+    private void desinscrireParticipant() {
+        try {
+            System.out.print("Entrez l'ID de l'événement: ");
+            int eventId = getIntInput();
+            System.out.print("Entrez l'ID du participant: ");
+            int participantId = getIntInput();
+
+            registrationService.unregisterParticipant(eventId, participantId);
+            System.out.println("Désinscription réussie.");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la désinscription: " + e.getMessage());
+        }
+    }
+
+    private void voirInscriptionsParEvenement() {
+        try {
+            System.out.print("Entrez l'ID de l'événement: ");
+            int eventId = getIntInput();
+
+            List<Registration> registrations = registrationService.getRegistrationsByEventId(eventId);
+            if (registrations.isEmpty()) {
+                System.out.println("Aucune inscription trouvée pour cet événement.");
+            } else {
+                System.out.println("Inscriptions pour l'événement ID " + eventId + ":");
+                for (Registration registration : registrations) {
+                    System.out.println(registration);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'affichage des inscriptions: " + e.getMessage());
+        }
+    }
+
+    private void voirInscriptionsParParticipant() {
+        try {
+            System.out.print("Entrez l'ID du participant: ");
+            int participantId = getIntInput();
+
+            List<Registration> registrations = registrationService.getRegistrationsByParticipantId(participantId);
+            if (registrations.isEmpty()) {
+                System.out.println("Aucune inscription trouvée pour ce participant.");
+            } else {
+                System.out.println("Inscriptions pour le participant ID " + participantId + ":");
+                for (Registration registration : registrations) {
+                    System.out.println(registration);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'affichage des inscriptions: " + e.getMessage());
         }
     }
 

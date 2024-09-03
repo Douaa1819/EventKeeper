@@ -1,14 +1,12 @@
 package com.eventkeeper;
 
-import com.eventkeeper.dao.EventDAO;
-import com.eventkeeper.dao.EventDAOImpl;
-import com.eventkeeper.dao.ParticipantDAO;
-import com.eventkeeper.dao.ParticipantDAOImpl;
+import com.eventkeeper.dao.*;
 import com.eventkeeper.menu.MenuConsole;
 import com.eventkeeper.models.Admin;
 import com.eventkeeper.models.Participant;
 import com.eventkeeper.services.EventService;
 import com.eventkeeper.services.ParticipantService;
+import com.eventkeeper.services.RegistrationService;
 
 import java.util.Scanner;
 
@@ -17,14 +15,14 @@ public class Main {
         // Initialisation des DAO et des services
         EventDAO eventDAO = new EventDAOImpl();
         ParticipantDAO participantDAO = new ParticipantDAOImpl();
-
+        RegistrationDAO registrationDAO = new RegistrationDAOImpl();
         EventService eventService = new EventService(eventDAO);
         ParticipantService participantService = new ParticipantService(participantDAO);
-
+        RegistrationService registrationService = new RegistrationService(registrationDAO);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            MenuConsole menuConsole = new MenuConsole(eventService, participantService, scanner);
+            MenuConsole menuConsole = new MenuConsole(eventService, participantService, registrationService, scanner);
 
             int role = promptForRole(scanner);
 
