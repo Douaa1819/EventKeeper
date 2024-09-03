@@ -117,7 +117,7 @@ public class MenuConsole {
             System.out.println("5. Retour au menu principal");
             System.out.print("Choisissez une option: ");
 
-            int choice = getIntInput(); // Get user input for menu choice
+            int choice = getIntInput();
 
             switch (choice) {
                 case 1:
@@ -217,7 +217,16 @@ public class MenuConsole {
             } else {
                 System.out.println("Inscriptions pour l'événement ID " + eventId + ":");
                 for (Registration registration : registrations) {
-                    System.out.println(registration);
+                    // Fetch and display event details
+                    Event event = eventService.getEventById(eventId);
+                    System.out.println("Événement: " + event);
+
+                    // Fetch and display participant details
+                    Participant participant = participantService.getParticipantById(registration.getParticipantId());
+                    System.out.println("Participant: " + participant);
+
+                    System.out.println("Détails de l'inscription: " + registration);
+                    System.out.println();
                 }
             }
         } catch (Exception e) {
@@ -236,13 +245,24 @@ public class MenuConsole {
             } else {
                 System.out.println("Inscriptions pour le participant ID " + participantId + ":");
                 for (Registration registration : registrations) {
-                    System.out.println(registration);
+                    // Fetch and display event details
+                    Event event = eventService.getEventById(registration.getEventId());
+                    System.out.println("Événement: " + event);
+
+                    // Fetch and display participant details
+                    Participant participant = participantService.getParticipantById(participantId);
+                    System.out.println("Participant: " + participant);
+
+                    // Display registration details
+                    System.out.println("Détails de l'inscription: " + registration);
+                    System.out.println(); // Blank line for readability
                 }
             }
         } catch (Exception e) {
             System.out.println("Erreur lors de l'affichage des inscriptions: " + e.getMessage());
         }
     }
+
 
     private void addParticipant() {
         System.out.println("Ajouter un participant");
