@@ -25,12 +25,14 @@ public class InscriptionView {
 
     public void run(Participant participant) {
         while (true) {
+            System.out.println("***********************************");
             System.out.println("\nMenu Participant:");
             System.out.println("1. Voir tous les événements");
             System.out.println("2. S'inscrire à un événement");
             System.out.println("3. Désinscrire à un événement");
             System.out.println("4. Voir mes inscriptions");
             System.out.println("5. Quitter");
+            System.out.println("***********************************");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput();
@@ -83,7 +85,7 @@ public class InscriptionView {
                 return;
             }
 
-            registrationService.registerParticipant(eventId, participant.getId());
+            registrationService.registerParticipant(event, participant);
             System.out.println("Inscription réussie.");
         } catch (Exception e) {
             System.out.println("Erreur lors de l'inscription: " + e.getMessage());
@@ -97,7 +99,7 @@ public class InscriptionView {
 
             // Vérifier si l'événement est bien enregistré pour ce participant
             List<Registration> registrations = registrationService.getRegistrationsByParticipantId(participant.getId());
-            boolean registered = registrations.stream().anyMatch(reg -> reg.getEventId() == eventId);
+            boolean registered = registrations.stream().anyMatch(reg -> reg.getEvent().getId() == eventId);
 
             if (!registered) {
                 System.out.println("Vous n'êtes pas inscrit à cet événement.");
@@ -120,7 +122,7 @@ public class InscriptionView {
             } else {
                 System.out.println("Vos inscriptions:");
                 for (Registration registration : registrations) {
-                    Event event = eventService.getEventById(registration.getEventId());
+                    Event event = eventService.getEventById(registration.getEvent().getId());
                     if (event != null) {
                         System.out.println("Événement:");
                         System.out.println("ID: " + event.getId());
@@ -129,11 +131,11 @@ public class InscriptionView {
                         System.out.println("Lieu: " + event.getLocation());
                         System.out.println("Description: " + event.getDescription());
                         System.out.println("Détails de l'inscription:");
-                        System.out.println("ID de l'événement: " + registration.getEventId());
-                        System.out.println("ID du participant: " + registration.getParticipantId());
+                        System.out.println("ID de l'événement: " + registration.getEvent().getId());
+                        System.out.println("ID du participant: " + registration.getParticipant().getId());
                         System.out.println();
                     } else {
-                        System.out.println("L'événement avec l'ID " + registration.getEventId() + " n'existe pas.");
+                        System.out.println("L'événement avec l'ID " + registration.getEvent().getId() + " n'existe pas.");
                     }
                 }
             }

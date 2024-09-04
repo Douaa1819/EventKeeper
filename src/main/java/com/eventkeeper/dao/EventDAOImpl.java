@@ -57,5 +57,12 @@ public class EventDAOImpl implements EventDAO {
                         (type == null || type.isEmpty() || event.getType().equalsIgnoreCase(type)))
                 .collect(Collectors.toList());
     }
+    public Event findByEventID(int eventID){
+        return events.stream().filter(e-> e.getId() == eventID).findFirst().get();
+    }
+
+
+
+
 }
 

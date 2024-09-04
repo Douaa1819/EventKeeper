@@ -17,16 +17,19 @@ public class EventsView {
     private final ParticipantService participantService;
     private final RegistrationService registrationService;
     private final ParticipantView participantView;
+    private final Report rapport;
     private final Scanner scanner = new Scanner(System.in);
 
     public EventsView(EventService eventService, ParticipantService participantService, RegistrationService registrationService) {
         this.eventService = eventService;
         this.participantService = participantService;
         this.registrationService = registrationService;
-        this.participantView = new ParticipantView(); // Passez les services si ParticipantView en a besoin
+        this.participantView = new ParticipantView();
+        this.rapport=new Report(registrationService);// Passez les services si ParticipantView en a besoin
     }
     public void run() {
         while (true) {
+            System.out.println("***********************************");
             System.out.println("\nMenu Administrateur:");
             System.out.println("1. Ajouter un événement");
             System.out.println("2. Modifier un événement");
@@ -34,7 +37,9 @@ public class EventsView {
             System.out.println("4. Lister tous les événements");
             System.out.println("5. Rechercher des événements");
             System.out.println("6. Gérer les participants");
-            System.out.println("7. Quitter");
+            System.out.println("7. gestion des rapports");
+            System.out.println("8. Quitter");
+            System.out.println("***********************************");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput();
@@ -59,6 +64,9 @@ public class EventsView {
                     participantView.run();
                     break;
                 case 7:
+                    rapport.run();
+                    break;
+                case 8:
                     System.out.println("Vous quittez le menu Administrateur.");
                     return;
                 default:
@@ -164,13 +172,16 @@ public class EventsView {
     }
 
     private void searchEvents() {
+        System.out.println("***********************************");
         System.out.println("Recherche d'événements:");
 
         System.out.println("1. Rechercher par date");
         System.out.println("2. Rechercher par lieu");
         System.out.println("3. Rechercher par type");
         System.out.println("4. Retourner au menu précédent");
+        System.out.println("***********************************");
         System.out.print("Choisissez une option: ");
+
 
         int choice = getIntInput();
         Date date = null;

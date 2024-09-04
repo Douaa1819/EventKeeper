@@ -1,32 +1,35 @@
 package com.eventkeeper.models;
 
 public class Registration {
-    private int eventId;
-    private int participantId;
+    private Event event;
+    private Participant participant;
 
-    public Registration(int eventId, int participantId) {
-        this.eventId = eventId;
-        this.participantId = participantId;
+    public Registration(Event event, Participant participant) {
+        this.event = event;
+        this.participant = participant;
     }
 
-    public int getEventId() {
-        return eventId;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public int getParticipantId() {
-        return participantId;
+    public Participant getParticipant() {
+        return participant;
     }
 
-    public void setParticipantId(int participantId) {
-        this.participantId = participantId;
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
     }
 
     @Override
     public String toString() {
-        return "Event ID: " + eventId + ", Participant ID: " + participantId;
+        return "Registration{" +
+                "event=" + event +
+                ", participant=" + participant +
+                '}';
     }
 }

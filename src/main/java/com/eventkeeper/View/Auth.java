@@ -20,23 +20,27 @@ import java.util.Scanner;
 public class Auth {
     private final Scanner scanner = new Scanner(System.in);
 
-    // Créer les instances DAO une seule fois
+    // les instances DAO une seule fois
     private final EventDAO eventDAO = new EventDAOImpl();
     private final RegistrationDAO registrationDAO = new RegistrationDAOImpl();
     private final ParticipantDAO participantDAO = new ParticipantDAOImpl();
 
-    // Créer les services en utilisant les DAO partagés
+    // les services en utilisant les DAO partagés
     private final EventService eventService = new EventService(eventDAO);
     private final RegistrationService registrationService = new RegistrationService(registrationDAO);
     private final ParticipantService participantService = new ParticipantService(participantDAO);
 
-    // Créer les vues en passant les services partagés
+    //  les vues en passant les services partagés
     private final EventsView eventsView = new EventsView(eventService, participantService, registrationService);
     private final InscriptionView inscriptionView = new InscriptionView(eventService, registrationService, participantService);
     private final ParticipantView participantView = new ParticipantView(); // Assurez-vous qu'elle utilise aussi les services partagés si nécessaire
 
     private int promptForRole() {
-        System.out.println("Entrez votre rôle (0 pour Admin, 1 pour Participant):");
+        System.out.println("__________________Bienvenu a EventKeeper_________________________");
+
+        System.out.println("*" + "*****************************************************" + "*");
+        System.out.println("*" + "Entrez votre rôle (0 pour Admin, 1 pour Participant):" + "*");
+        System.out.println("*" + "*****************************************************" + "*");
         while (true) {
             try {
                 int role = Integer.parseInt(scanner.nextLine());

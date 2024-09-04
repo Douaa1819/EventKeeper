@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventDAO {
+
     void addEvent(Event event);
     void updateEvent(Event event);
     void deleteEvent(int eventId);
@@ -13,4 +14,5 @@ public interface EventDAO {
     List<Event> getAllEvents();
     List<Event> searchEvents(Date date, String location, String type);
     }
+
 

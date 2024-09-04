@@ -95,12 +95,14 @@ public class ParticipantView {
 
 
         while (true) {
+            System.out.println("***********************************");
             System.out.println("\nGestion des Participants:");
             System.out.println("1. Ajouter un participant");
             System.out.println("2. Modifier un participant");
             System.out.println("3. Supprimer un participant");
             System.out.println("4. Afficher la liste des participants");
             System.out.println("5. Retour au menu principal");
+            System.out.println("***********************************");
             System.out.print("Choisissez une option: ");
 
             int choice = getIntInput();
