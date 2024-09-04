@@ -227,3 +227,10 @@ Ce projet est sous licence MIT.
 ## Planification
 
 Pour suivre la planification et les tâches en cours, veuillez consulter notre tableau de bord Jira : [Planification EventKeeper](https://douaa123.atlassian.net/jira/software/projects/VNTKPR/boards/6/backlog)
+
+
+
+## Presenattion
+
+ [Presentation EventKeeper](https://www.canva.com/design/DAGPqHvBfWA/vHE8lxQbEXdDqgoz0or_Zw/edit)
+
