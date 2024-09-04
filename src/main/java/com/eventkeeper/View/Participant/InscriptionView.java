@@ -59,6 +59,8 @@ public class InscriptionView {
         }
     }
 
+    //voir tous les evenment
+
     private void listAllEvents() {
         try {
             List<Event> events = eventService.getAllEvents();
@@ -74,7 +76,7 @@ public class InscriptionView {
             System.out.println("Erreur lors de la récupération des événements: " + e.getMessage());
         }
     }
-
+    //fonction pour s inscrire un Participant
     private void registerForEvent(Participant participant) {
         try {
             System.out.print("Entrez l'ID de l'événement auquel vous voulez vous inscrire: ");
@@ -91,6 +93,8 @@ public class InscriptionView {
             System.out.println("Erreur lors de l'inscription: " + e.getMessage());
         }
     }
+
+    //fonction pour desinscrire un Participant
 
     private void desinscrireParticipant(Participant participant) {
         try {

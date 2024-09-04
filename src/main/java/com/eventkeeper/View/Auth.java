@@ -67,10 +67,9 @@ public class Auth {
                 System.out.println("Rôle invalide. Veuillez réessayer.");
             }
         }
-
-        // scanner.close(); // Ne jamais fermer le scanner lié à System.in
     }
 
+    //methode pour creation de Admin
     private Admin createAdmin() {
         System.out.print("Entrez votre prénom: ");
         String firstName = scanner.nextLine();
@@ -81,6 +80,7 @@ public class Auth {
         return new Admin(1, firstName, lastName, email);
     }
 
+    //methode pour creation de Participant
     private Participant createParticipant() {
         System.out.print("Entrez votre prénom: ");
         String firstName = scanner.nextLine();

@@ -27,6 +27,8 @@ public class EventsView {
         this.participantView = new ParticipantView();
         this.rapport=new Report(registrationService);// Passez les services si ParticipantView en a besoin
     }
+
+    //Menu console
     public void run() {
         while (true) {
             System.out.println("***********************************");
@@ -75,6 +77,7 @@ public class EventsView {
         }
     }
 
+    //verification de les inputes
     private int getIntInput() {
         while (true) {
             try {
@@ -84,6 +87,7 @@ public class EventsView {
             }
         }
     }
+    //ajouter un evenment
 
     private void addEvent() {
         try {
@@ -109,7 +113,7 @@ public class EventsView {
             System.out.println("Erreur lors de l'ajout de l'événement: " + e.getMessage());
         }
     }
-
+//modifier un evenment
     private void updateEvent() {
         try {
             System.out.print("Entrez l'ID de l'événement à modifier: ");
@@ -158,7 +162,7 @@ public class EventsView {
             System.out.println("Erreur lors de la mise à jour de l'événement: " + e.getMessage());
         }
     }
-
+// supprimer un evenment
     private void deleteEvent() {
         try {
             System.out.print("Entrez l'ID de l'événement à supprimer: ");
@@ -170,7 +174,7 @@ public class EventsView {
             System.out.println("Erreur lors de la suppression de l'événement: " + e.getMessage());
         }
     }
-
+//Search for event
     private void searchEvents() {
         System.out.println("***********************************");
         System.out.println("Recherche d'événements:");
@@ -234,6 +238,7 @@ public class EventsView {
         }
     }
 
+    //Validation de date
     private Date convertStringToDate(String dateString) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");

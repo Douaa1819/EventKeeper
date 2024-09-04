@@ -31,65 +31,7 @@ public class ParticipantView {
     }
 
 
-    private void addParticipant() {
-        System.out.println("Ajouter un participant");
-        System.out.print("Entrez le prénom: ");
-        String firstName = scanner.nextLine();
-        System.out.print("Entrez le nom de famille: ");
-        String lastName = scanner.nextLine();
-        System.out.print("Entrez l'email: ");
-        String email = scanner.nextLine();
-        System.out.print("Entrez le numéro de téléphone: ");
-        String phoneNumber = scanner.nextLine();
-        Participant participant = new Participant(1, firstName, lastName, email, phoneNumber);
-        participantService.addParticipant(participant);
-        System.out.println("Participant ajouté avec succès.");
-    }
-
-    private void updateParticipant() {
-        System.out.println("Modifier un participant");
-        System.out.print("Entrez l'ID du participant à modifier: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        Participant participant = participantService.getParticipantById(id);
-        if (participant != null) {
-            System.out.print("Entrez le nouveau prénom (laisser vide pour ne pas modifier): ");
-            String firstName = scanner.nextLine();
-            System.out.print("Entrez le nouveau nom de famille (laisser vide pour ne pas modifier): ");
-            String lastName = scanner.nextLine();
-            System.out.print("Entrez le nouvel email (laisser vide pour ne pas modifier): ");
-            String email = scanner.nextLine();
-            System.out.print("Entrez le nouveau numéro de téléphone (laisser vide pour ne pas modifier): ");
-            String phoneNumber = scanner.nextLine();
-
-            if (!firstName.isEmpty()) participant.setFirstName(firstName);
-            if (!lastName.isEmpty()) participant.setLastName(lastName);
-            if (!email.isEmpty()) participant.setEmail(email);
-            if (!phoneNumber.isEmpty()) participant.setPhoneNumber(phoneNumber);
-
-            participantService.updateParticipant(participant);
-            System.out.println("Participant mis à jour avec succès.");
-        } else {
-            System.out.println("Participant non trouvé.");
-        }
-    }
-
-    private void deleteParticipant() {
-        System.out.println("Supprimer un participant");
-        System.out.print("Entrez l'ID du participant à supprimer: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        participantService.deleteParticipant(id);
-        System.out.println("Participant supprimé avec succès.");
-    }
-
-    private void listParticipants() {
-        System.out.println("Liste des participants:");
-        for (Participant participant : participantService.getAllParticipants()) {
-            System.out.println(participant);
-        }
-    }
-
+    //Menu Console
 
     public void run(){
 
@@ -130,4 +72,67 @@ public class ParticipantView {
 
 
     }
+//ajouter participant
+    private void addParticipant() {
+        System.out.println("Ajouter un participant");
+        System.out.print("Entrez le prénom: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Entrez le nom de famille: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Entrez l'email: ");
+        String email = scanner.nextLine();
+        System.out.print("Entrez le numéro de téléphone: ");
+        String phoneNumber = scanner.nextLine();
+        Participant participant = new Participant(1, firstName, lastName, email, phoneNumber);
+        participantService.addParticipant(participant);
+        System.out.println("Participant ajouté avec succès.");
+    }
+//modifier participant
+    private void updateParticipant() {
+        System.out.println("Modifier un participant");
+        System.out.print("Entrez l'ID du participant à modifier: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Participant participant = participantService.getParticipantById(id);
+        if (participant != null) {
+            System.out.print("Entrez le nouveau prénom (laisser vide pour ne pas modifier): ");
+            String firstName = scanner.nextLine();
+            System.out.print("Entrez le nouveau nom de famille (laisser vide pour ne pas modifier): ");
+            String lastName = scanner.nextLine();
+            System.out.print("Entrez le nouvel email (laisser vide pour ne pas modifier): ");
+            String email = scanner.nextLine();
+            System.out.print("Entrez le nouveau numéro de téléphone (laisser vide pour ne pas modifier): ");
+            String phoneNumber = scanner.nextLine();
+
+            if (!firstName.isEmpty()) participant.setFirstName(firstName);
+            if (!lastName.isEmpty()) participant.setLastName(lastName);
+            if (!email.isEmpty()) participant.setEmail(email);
+            if (!phoneNumber.isEmpty()) participant.setPhoneNumber(phoneNumber);
+
+            participantService.updateParticipant(participant);
+            System.out.println("Participant mis à jour avec succès.");
+        } else {
+            System.out.println("Participant non trouvé.");
+        }
+    }
+    //supprimer un participant
+    private void deleteParticipant() {
+        System.out.println("Supprimer un participant");
+        System.out.print("Entrez l'ID du participant à supprimer: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        participantService.deleteParticipant(id);
+        System.out.println("Participant supprimé avec succès.");
+    }
+
+    //afficher tous les participant
+    private void listParticipants() {
+        System.out.println("Liste des participants:");
+        for (Participant participant : participantService.getAllParticipants()) {
+            System.out.println(participant);
+        }
+    }
+
+
+
 }

@@ -40,7 +40,6 @@ public class Report {
                 break;
                 case 3 :
                     return;
-
                 default:  System.out.println("Option invalide. Retour au menu précédent.");
                     return;
             }
